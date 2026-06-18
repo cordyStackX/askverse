@@ -16,13 +16,13 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
-    "@next/eslint-plugin-next": "^15.5.18",
-    "@tailwindcss/postcss": "^4.3.0",
-    "@types/node": "^20.19.41",
-    "@types/react": "^19.2.15",
+    "@next/eslint-plugin-next": "^15.5.19",
+    "@tailwindcss/postcss": "^4.3.1",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.60.0",
-    "@typescript-eslint/parser": "^8.60.0",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
+    "@typescript-eslint/parser": "^8.61.1",
     "eslint": "^9.39.4",
     "eslint-config-next": "15.5.2",
     "eslint-import-resolver-alias": "^1.1.2",
@@ -32,7 +32,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.5.0",
-    "tailwindcss": "^4.3.0",
+    "tailwindcss": "^4.3.1",
     "typescript": "^5.9.3"
   }
 }
