@@ -137,8 +137,8 @@ We appreciate the security research community's efforts in keeping our project s
 ## Contact
 
 For security-related questions or concerns:
-- Email: cordovamarcgiestinlouis@gmail.com
-- GitHub: https://github.com/cordyStackX/cordy_minikit_official/security
+- Email: cordystackx@gmail.com
+- GitHub: https://github.com/cordyStackX/askverse/security
 
 ---
 
