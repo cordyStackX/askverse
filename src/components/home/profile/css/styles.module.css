@@ -1,0 +1,19 @@
+.container {
+  display: none;
+}
+
+.panel {
+  padding: 1.2rem;
+  border-radius: 1.5rem;
+  background: rgba(13, 11, 19, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel h3 {
+  margin-bottom: 0.5rem;
+}
+
+.panel p {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.7;
+}

@@ -1,0 +1,214 @@
+.container {
+  position: fixed;
+  top: calc(var(--home-header-height) + 1rem);
+  left: max(1.25rem, calc((100vw - 1280px) / 2 + 1.25rem));
+  width: 280px;
+  height: fit-content;
+  z-index: 5;
+}
+
+.panel {
+  padding: 1.2rem;
+  border-radius: 1.6rem;
+  background: rgba(13, 11, 19, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.profile_button {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(255, 95, 187, 0.2), rgba(157, 107, 255, 0.2));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile p {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.nav {
+  margin-top: 1rem;
+}
+
+.nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.nav li {
+  list-style: none;
+  padding: 0.85rem 0.9rem;
+  border-radius: 1rem;
+  color: rgba(255, 255, 255, 0.84);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+}
+
+.nav li:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.stats {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.stats article {
+  flex: 1 1 0;
+  padding: 0.9rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stats span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.88rem;
+}
+
+.burger {
+  display: none;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.55rem;
+  cursor: pointer;
+}
+
+.burger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.burger span + span {
+  margin-top: 4px;
+}
+
+.profile_overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(4, 3, 7, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.profile_modal {
+  width: min(100%, 520px);
+  padding: 1.25rem;
+  border-radius: 1.6rem;
+  background: #120f1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+}
+
+.profile_modal_head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.profile_modal_head p {
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.profile_modal_head h3 {
+  margin-top: 0.35rem;
+  font-size: 1.25rem;
+}
+
+.profile_modal label {
+  display: inline-block;
+  margin-top: 1rem;
+  margin-bottom: 0.45rem;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.profile_modal input {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0d0b13;
+  color: rgba(255, 255, 255, 0.92);
+  outline: none;
+}
+
+.profile_actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.profile_actions button,
+.profile_modal_head button {
+  padding: 0.7rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.88);
+  cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+  .container {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+  }
+
+  .panel {
+    padding: 1rem;
+  }
+
+  .burger {
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .nav,
+  .stats {
+    display: none;
+  }
+
+  .profile_modal {
+    width: 100%;
+  }
+}

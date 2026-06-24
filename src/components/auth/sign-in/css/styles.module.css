@@ -1,0 +1,121 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: min(100%, 1180px);
+  min-height: calc(100vh - 4rem);
+}
+
+.glow_left,
+.glow_right {
+  position: absolute;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 50%;
+  filter: blur(28px);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.glow_left {
+  left: -6rem;
+  top: 15%;
+  background: radial-gradient(circle, rgba(255, 92, 168, 0.45), transparent 70%);
+}
+
+.glow_right {
+  right: -8rem;
+  bottom: 10%;
+  background: radial-gradient(circle, rgba(146, 109, 255, 0.4), transparent 70%);
+}
+
+.sign_in_contain {
+  width: min(100%, 34rem);
+  padding: 2.4rem 2rem;
+  border-radius: 2rem;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+    rgba(13, 11, 19, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+}
+
+.kicker {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.sign_in_contain h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.lead {
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.75;
+}
+
+.button_wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.wallet_button {
+  min-width: 15rem;
+  min-height: 3.4rem;
+  padding: 0.95rem 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff5fbb, #9d6bff);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 14px 35px rgba(157, 107, 255, 0.24);
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.wallet_button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+
+.wallet_button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: 1rem;
+  }
+
+  .sign_in_contain {
+    padding: 2rem 1.25rem;
+  }
+
+  .wallet_button {
+    width: 100%;
+    min-width: 0;
+  }
+}
+

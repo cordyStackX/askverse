@@ -1,0 +1,89 @@
+.container {
+  width: 100%;
+  padding: 1rem 1.5rem 4rem;
+}
+
+.wrapper {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+.section_label {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.heading {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: 1fr 0.9fr;
+  align-items: end;
+}
+
+.heading h2 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.heading p {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.75;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cards article {
+  min-height: 16rem;
+  padding: 1.4rem;
+  border-radius: 1.6rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+    rgba(13, 11, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cards span {
+  display: inline-flex;
+  margin-bottom: 1.2rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 95, 187, 0.16);
+  color: #ff99d4;
+  font-size: 0.85rem;
+}
+
+.cards h3 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.cards p {
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .heading,
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: 1rem;
+  }
+}

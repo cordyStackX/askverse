@@ -1,0 +1,55 @@
+.container {
+  width: 100%;
+  padding: 0 1.5rem 4rem;
+}
+
+.wrapper {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+}
+
+.heading h2 {
+  margin: 0.6rem 0 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.04em;
+}
+
+.section_label {
+  display: inline-flex;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.list {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.list details {
+  padding: 1.2rem 1.3rem;
+  border-radius: 1.3rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.list summary {
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.list p {
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.75;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: 1rem;
+  }
+}

@@ -3,6 +3,7 @@
   --foreground: #171717;
   --primary: #000;
   --secondary: #fff;
+  --home-header-height: 5.4rem;
 
   /* Width Limiter */
   --max-width: 1200px;

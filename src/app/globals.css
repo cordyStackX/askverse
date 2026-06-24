@@ -18,8 +18,12 @@ body {
   display: flex;
   flex-direction: column;
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(255, 93, 173, 0.18), transparent 35%),
+    radial-gradient(circle at top right, rgba(125, 94, 255, 0.16), transparent 28%),
+    linear-gradient(180deg, #09070d 0%, #050407 100%);
+  background-attachment: fixed;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

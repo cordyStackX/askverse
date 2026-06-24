@@ -1,0 +1,35 @@
+.container {
+  width: 100%;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.copy,
+.meta {
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: 1rem;
+  }
+
+  .wrapper {
+    flex-direction: column;
+  }
+}

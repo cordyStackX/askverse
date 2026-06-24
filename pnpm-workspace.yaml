@@ -1,6 +1,10 @@
 allowBuilds:
+  '@reown/appkit': false
+  protobufjs: true
   sharp: true
   unrs-resolver: true
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+minimumReleaseAgeExclude:
+  - '@cordystackx/cordy_minikit@2.0.6'

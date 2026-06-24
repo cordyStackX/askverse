@@ -2,8 +2,12 @@
 import styles from "./css/styles.module.css";
 import Image from "next/image";
 import img_src from "@/config/json_images/image_src.json";
+import navigations from "@/config/json_links/navigations.json";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const router = useRouter();
+
   return(
     <header className={styles.container}>
       <div className={styles.wrapper}>
@@ -12,7 +16,7 @@ export default function Header() {
             src={img_src.logo}
             alt="Logo"
             title="Logo"
-            width={40}
+            width={50}
             height={40}
             priority
           />
@@ -26,7 +30,7 @@ export default function Header() {
           </ul>
         </nav>
         <div className={styles.buttons_contain}>
-          <button>Get Started</button>
+          <button onClick={() => {router.push(navigations.auth.sign_in);}}>Get Started</button>
         </div>
       </div>
     </header>
