@@ -39,6 +39,9 @@ https://askverse-pi.vercel.app/
 
 ![AskVerse Screenshots](https://raw.githubusercontent.com/cordyStackX/askverse/refs/heads/main/public/Screenshot_2026-06-26-053505.png)
 
+![AskVerse Screenshots](https://raw.githubusercontent.com/LCCB-SIPD/askverse/refs/heads/main/public/Screenshot_2026-06-26-064105.png)
+
+
 
 ## 🌟 Why AskVerse?
 
