@@ -22,6 +22,7 @@ export default function Home_page() {
   const [displayName, setDisplayName] = useState("");
   const [username, setUsername] = useState("");
   const [globalLoading, setGlobalLaoding] = useState(false);
+  const [filter, setFilter] = useState(false);
   const { context, evm, stellar } = useWalletStatus();
   const { disconnectAll } = useDisconnectWallets();
 
@@ -55,8 +56,8 @@ export default function Home_page() {
     <main className="homepage">
       <Header onPostQuestionClick={() => setQuestionComposerOpen((current) => !current)} />
       <div className="homepage_shell">
-        <Aside_left displayName={displayName} username={username} context={context} evm={`${evm.address}`} stellar={`${stellar.address}`} setDisplayName={setDisplayName} setUsername={setUsername} />
-        <Content_feed displayName={displayName} context={context} acc_address={`${context === "EVM" ? evm.address : stellar.address}`} />
+        <Aside_left displayName={displayName} username={username} context={context} evm={`${evm.address}`} stellar={`${stellar.address}`} setDisplayName={setDisplayName} setUsername={setUsername} setFilter={setFilter} />
+        <Content_feed displayName={displayName} context={context} acc_address={`${context === "EVM" ? evm.address : stellar.address}`} filter={filter} />
         <Aside_right />
         <Profile />
       </div>

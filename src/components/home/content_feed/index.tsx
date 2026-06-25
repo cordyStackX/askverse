@@ -30,6 +30,7 @@ type Content_feedProps = {
   acc_address: string;
   displayName: string;
   context: string;
+  filter: boolean;
 }
 
 function HeartIcon({ active }: { active?: boolean }) {
@@ -46,7 +47,7 @@ function HeartIcon({ active }: { active?: boolean }) {
 
 const GIFT_AMOUNTS = [100, 250, 500, 1000] as const;
 
-export default function Content_feed({ acc_address, displayName, context } : Content_feedProps) {
+export default function Content_feed({ acc_address, displayName, context, filter } : Content_feedProps) {
   const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
   const [activeQuestionId, setActiveQuestionId] = useState<number | null>(null);
   const [replyDraft, setReplyDraft] = useState("");
@@ -61,11 +62,14 @@ export default function Content_feed({ acc_address, displayName, context } : Con
       const response = await Fetch_to(json_route.feeds.retrieve_post);
 
       if (response.success) {
-        setFeedItems(response.data.message);
+        const myPosts = feedItems.filter(
+          (item) => item.acc_address === acc_address
+        );
+        setFeedItems(filter ? myPosts : response.data.message);
       }
     }
     Retrieve();
-  }, [refresh]);
+  }, [refresh, filter]);
   
   const activeQuestion = useMemo(
     () => feedItems.find((item) => item.id === activeQuestionId) ?? null,
@@ -208,8 +212,19 @@ export default function Content_feed({ acc_address, displayName, context } : Con
                   Show Answers
                 </button>
                 <button onClick={async() => {
-                  await Fetch_to(json_route.feeds.hearts, { id: item.id, acc_address: acc_address });
-                  setRefresh(true);
+                  setLoading(true);
+                  const response = await Fetch_to(json_route.feeds.hearts, { id: item.id, acc_address: acc_address });
+                  
+                  if (response.success) {
+                    setRefresh(true);
+                    setTimeout(() => setRefresh(false), 500);
+                    setLoading(false);
+                  } else {
+                    setRefresh(true);
+                    setTimeout(() => setRefresh(false), 500);
+                    setLoading(false);
+                  }
+                  
                 }} type="button" className={styles.heart_button}>
                   <HeartIcon active />
                   <span >{loading ? "Loading..." : (`Heart ${item.hearts}`)}</span>

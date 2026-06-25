@@ -15,9 +15,10 @@ type Aside_leftProps = {
   stellar?:string;
   setDisplayName: Dispatch<SetStateAction<string>>;
   setUsername: Dispatch<SetStateAction<string>>;
+  setFilter: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function Aside_left({ displayName, username, context, evm, stellar, setDisplayName, setUsername } : Aside_leftProps) {
+export default function Aside_left({ displayName, username, context, evm, stellar, setDisplayName, setUsername, setFilter } : Aside_leftProps) {
   const router = useRouter();
   const [profileOpen, setProfileOpen] = useState(false);
   const { disconnectAll } = useDisconnectWallets();
@@ -59,8 +60,8 @@ export default function Aside_left({ displayName, username, context, evm, stella
         </div>
         <nav className={styles.nav}>
           <ul>
-            <li onClick={() => {}}>Feeds</li>
-            <li onClick={() => {}}>My Questions</li>
+            <li onClick={() => {setFilter(false);}}>Feeds</li>
+            <li onClick={() => {setFilter(true);}}>My Questions</li>
           </ul>
         </nav>
       </div>

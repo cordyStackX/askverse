@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AskVerse
 
-## Getting Started
+**AskVerse** is a decentralized Knowledge-to-Earn platform powered by the Stellar ecosystem. It enables users to ask questions, share answers, and reward valuable contributors with XLM through fast and low-cost blockchain transactions.
 
-First, run the development server:
+## 🚀 Features
+
+* 💬 Ask and answer questions
+* ⭐ Community-driven knowledge sharing
+* 🎁 Send XLM gifts to helpful contributors
+* 👛 Stellar wallet authentication
+* ⚡ Fast and low-cost transactions using Stellar
+
+## 🛠️ Tech Stack
+
+* Next.js
+* TypeScript
+* CSS Modules
+* PostgreSQL
+* Stellar SDK
+* Stellar Wallet Integration
+
+## 🌐 Live Demo
+
+**Vercel:**
+https://your-vercel-url.vercel.app
+
+## 📷 Screenshots
+
+*Add screenshots of your application here.*
+
+## 🚀 Getting Started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌟 Why AskVerse?
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Traditional Q&A platforms reward users with reputation points that have little real-world value. AskVerse leverages the Stellar blockchain to allow community members to directly reward valuable answers with XLM, creating a transparent and decentralized knowledge-sharing ecosystem.
 
-## Learn More
+## 👥 Team
 
-To learn more about Next.js, take a look at the following resources:
+Marc Giestin Louis Cordova (CordyStackX)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📄 License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
