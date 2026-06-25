@@ -38,14 +38,6 @@ https://your-vercel-url.vercel.app
 
 ![AskVerse Screenshots](https://raw.githubusercontent.com/cordyStackX/askverse/refs/heads/main/public/Screenshot_2026-06-26-053505.png)
 
-## 🚀 Getting Started
-
-```bash
-npm install
-npm run dev
-```
-
-Open http://localhost:3000 to view the application.
 
 ## 🌟 Why AskVerse?
 
