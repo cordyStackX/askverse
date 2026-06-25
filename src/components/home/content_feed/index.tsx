@@ -212,22 +212,19 @@ export default function Content_feed({ acc_address, displayName, context, filter
                   Show Answers
                 </button>
                 <button onClick={async() => {
-                  setLoading(true);
                   const response = await Fetch_to(json_route.feeds.hearts, { id: item.id, acc_address: acc_address });
                   
                   if (response.success) {
                     setRefresh(true);
                     setTimeout(() => setRefresh(false), 500);
-                    setLoading(false);
                   } else {
                     setRefresh(true);
                     setTimeout(() => setRefresh(false), 500);
-                    setLoading(false);
                   }
                   
                 }} type="button" className={styles.heart_button}>
                   <HeartIcon active />
-                  <span >{loading ? "Loading..." : (`Heart ${item.hearts}`)}</span>
+                  <span >Heart {item.hearts}</span>
                 </button>
               </div>
             </article>

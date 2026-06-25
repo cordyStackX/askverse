@@ -13,12 +13,13 @@ type Aside_leftProps = {
   context?: string;
   evm?:string;
   stellar?:string;
+  balance?: string;
   setDisplayName: Dispatch<SetStateAction<string>>;
   setUsername: Dispatch<SetStateAction<string>>;
   setFilter: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function Aside_left({ displayName, username, context, evm, stellar, setDisplayName, setUsername, setFilter } : Aside_leftProps) {
+export default function Aside_left({ displayName, username, context, evm, stellar, setDisplayName, setUsername, setFilter, balance } : Aside_leftProps) {
   const router = useRouter();
   const [profileOpen, setProfileOpen] = useState(false);
   const { disconnectAll } = useDisconnectWallets();
@@ -49,7 +50,8 @@ export default function Aside_left({ displayName, username, context, evm, stella
             <div className={styles.avatar}>AV</div>
             <div>
               <strong>{displayName}</strong>
-              <p>@{username}</p>
+              <p style={{ margin: "0.2rem" }}>@{username}</p>
+              <p>Balance: {Number(balance).toFixed(2)}</p>
             </div>
           </button>
           <button type="button" className={styles.burger} aria-label="Open navigation">
