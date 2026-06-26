@@ -3,7 +3,7 @@ import styles from "./css/styles.module.css";
 
 export default function FaQ() {
   return(
-    <section className={styles.container}>
+    <section className={styles.container} id="FaQ">
       <div className={styles.wrapper}>
         <div className={styles.heading}>
           <div className={styles.section_label}>Questions</div>

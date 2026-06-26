@@ -3,7 +3,7 @@ import styles from "./css/styles.module.css";
 
 export default function Article() {
   return(
-    <article className={styles.container}>
+    <article className={styles.container} id="about" >
       <div className={styles.wrapper}>
         <div className={styles.header}>
           <div className={styles.section_label}>#240 Verified Volunteer Records</div>

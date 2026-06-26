@@ -4,6 +4,7 @@ import Image from "next/image";
 import img_src from "@/config/json_images/image_src.json";
 import navigations from "@/config/json_links/navigations.json";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Header() {
   const router = useRouter();
@@ -24,9 +25,9 @@ export default function Header() {
         </figure>
         <nav className={styles.nav_bar}>
           <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>FaQ</li>
+            <li><Link href="#">Home</Link></li>
+            <li><Link href="#about">About</Link></li>
+            <li><Link href="#FaQ">FaQ</Link></li>
           </ul>
         </nav>
         <div className={styles.buttons_contain}>
