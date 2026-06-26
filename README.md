@@ -61,7 +61,7 @@ Founder & Lead Developer
 * Implemented XLM gifting functionality
 * Managed deployment and technical implementation
 
-**Julian Martir**
+**Julian Martir** & **Angel Lucenio**
 Documentation & Presentation
 
 * Prepared project documentation
