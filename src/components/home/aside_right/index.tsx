@@ -1,11 +1,11 @@
 import styles from "./css/styles.module.css";
-// import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
-// type Aside_rightProps = {
+type Aside_rightProps = {
+  setFilterSearch: Dispatch<SetStateAction<string>>;
+}
 
-// }
-
-export default function Aside_right() {
+export default function Aside_right({ setFilterSearch } : Aside_rightProps) {
   return(
     <section className={styles.container}>
       <div className={styles.panel}>
@@ -18,9 +18,9 @@ export default function Aside_right() {
           </button>
         </div>
         <ul>
-          <li>Stellar rewards for contributors</li>
-          <li>How to earn by answering well</li>
-          <li>Welcome to AskVerse</li>
+          <li onClick={() => {setFilterSearch("Stellar rewards for contributors");}} >Stellar rewards for contributors</li>
+          <li onClick={() => {setFilterSearch("How to earn by answering well");}} >How to earn by answering well</li>
+          <li onClick={() => {setFilterSearch("Welcome to AskVerse");}} >Welcome to AskVerse</li>
         </ul>
       </div>
 

@@ -33,6 +33,7 @@ type Content_feedProps = {
   displayName: string;
   context: string;
   filter: boolean;
+  filterSearch: string;
 }
 
 function HeartIcon({ active }: { active?: boolean }) {
@@ -49,7 +50,7 @@ function HeartIcon({ active }: { active?: boolean }) {
 
 const GIFT_AMOUNTS = [100, 250, 500, 1000] as const;
 
-export default function Content_feed({ acc_address, displayName, context, filter } : Content_feedProps) {
+export default function Content_feed({ acc_address, displayName, context, filter, filterSearch } : Content_feedProps) {
   const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
   const [activeQuestionId, setActiveQuestionId] = useState<number | null>(null);
   const [replyDraft, setReplyDraft] = useState("");
@@ -62,11 +63,12 @@ export default function Content_feed({ acc_address, displayName, context, filter
 
   useEffect(() => {
     async function Retrieve() {
-      const response = await Fetch_to(json_route.feeds.retrieve_post);
+      const response = await Fetch_to(json_route.feeds.retrieve_post, {
+        search: filterSearch,
+      });
 
-      const result = response.data.message;
-      
       if (response.success) {
+        const result = response.data.message;
         const posts: FeedItem[] = result[0];
         const answers: FeedItem["answersList"] = result[1];
 
@@ -82,7 +84,7 @@ export default function Content_feed({ acc_address, displayName, context, filter
           };
         });
 
-        const myPosts = feedItems.filter(
+        const myPosts = merged.filter(
           (item) => item.acc_address === acc_address
         );
 
@@ -91,7 +93,7 @@ export default function Content_feed({ acc_address, displayName, context, filter
       }
     }
     Retrieve();
-  }, [refresh, filter]);
+  }, [refresh, filter, filterSearch, acc_address]);
   
   const activeQuestion = useMemo(
     () => feedItems.find((item) => item.id === activeQuestionId) ?? null,

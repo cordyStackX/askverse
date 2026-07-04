@@ -2,13 +2,29 @@ import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
 
 
-export async function POST() {
+export async function POST(request: Request) {
 
   try{
+    const { search = "" } = await request.json().catch(() => ({}));
+    const searchTerm = String(search)
+    .replaceAll(",", " ")
+    .replaceAll("(", " ")
+    .replaceAll(")", " ")
+    .trim();
 
-    const { data, error } = await supabaseServer
+    let feedsQuery = supabaseServer
     .from("feeds")
     .select("*");
+
+    if (searchTerm) {
+      const pattern = `%${searchTerm.replaceAll("%", "\\%").replaceAll("_", "\\_")}%`;
+
+      feedsQuery = feedsQuery.or(
+        `question.ilike.${pattern},body.ilike.${pattern},author.ilike.${pattern},acc_address.ilike.${pattern}`
+      );
+    }
+
+    const { data, error } = await feedsQuery;
 
     const { data: answersList, error: Err_answersList } = await supabaseServer
     .from("answersList")

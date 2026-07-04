@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import styles from "./css/styles.module.css";
 
 type HeaderProps = {
   onPostQuestionClick: () => void;
+  filterSearch: string;
+  setFilterSearch: Dispatch<SetStateAction<string>>;
 };
 
-export default function Header({ onPostQuestionClick }: HeaderProps) {
-  const [searchValue, setSearchValue] = useState("");
+export default function Header({ onPostQuestionClick, filterSearch, setFilterSearch }: HeaderProps) {
 
   return(
     <header className={styles.container}>
@@ -23,8 +24,8 @@ export default function Header({ onPostQuestionClick }: HeaderProps) {
         <div className={styles.search}>
           <input
             type="search"
-            value={searchValue}
-            onChange={(event) => setSearchValue(event.target.value)}
+            value={filterSearch}
+            onChange={(event) => setFilterSearch(event.target.value)}
             placeholder="Search AskVerse"
             aria-label="Search AskVerse"
           />
