@@ -2,66 +2,109 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabase-server";
 import { rateLimit } from "@/lib/rate_limit";
 
-export async function POST(params: NextRequest) {
+export async function POST(req: NextRequest) {
+  const rate = rateLimit(req, {
+    windowMs: 1000,
+    max: 5,
+    keyPrefix: "health",
+  });
 
-  const rate = rateLimit(params, { windowMs: 1000, max: 5, keyPrefix: "health" });
   if (!rate.allowed) {
-      const retryAfterSeconds = Math.ceil((rate.resetAt - Date.now()) / 1000);
-      return NextResponse.json(
-          { success: false, error: "Too many requests. Please try again later." },
-          { status: 429, headers: { "Retry-After": String(retryAfterSeconds) } }
-      );
+    const retryAfterSeconds = Math.ceil(
+      (rate.resetAt - Date.now()) / 1000
+    );
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Too many requests. Please try again later.",
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(retryAfterSeconds),
+        },
+      }
+    );
   }
-  
-  const { id, acc_address } = await params.json();
+
+  const { id, acc_address } = await req.json();
 
   try {
-    if (!id || !acc_address) return NextResponse.json({ success: false, error: "Data Provided not exist" }, { status: 404 });
-    
-    const { data, error: ErrorHeart } = await supabaseServer
-    .from("feeds")
-    .select("hearts, hearts_record")
-    .eq("id", id)
-    .single();
-
-    if (ErrorHeart) {
-      return NextResponse.json(
-        { success: false, error: "Something Went Wrong" },
-        { status: 408 }
-      );
-    }
-
-    const heartsRecord = data.hearts_record || [];
-
-    if (heartsRecord.includes(acc_address)) {
+    if (!id || !acc_address) {
       return NextResponse.json(
         {
           success: false,
-          error: "Already hearted"
+          error: "Data Provided not exist",
         },
-        { status: 409 }
+        { status: 400 }
       );
     }
 
-
-    const { error } = await supabaseServer
-    .from("feeds")
-    .update({
-      hearts: data.hearts + 1,
-      hearts_record: [...heartsRecord, acc_address]
-    })
-    .eq("id", id);
+    const { data, error } = await supabaseServer
+      .from("feeds")
+      .select("hearts, hearts_record")
+      .eq("id", id)
+      .single();
 
     if (error) {
-      console.error(error);
-      return NextResponse.json({ success: false, error: "Something Went Wrong" }, { status: 408 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Something Went Wrong",
+        },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ success: true, message: "Answered Successfully" }, { status: 200 });
+    const heartsRecord: string[] = data.hearts_record ?? [];
 
-  } catch(err) {
+    const alreadyHearted = heartsRecord.includes(acc_address);
+
+    const updatedHeartsRecord = alreadyHearted
+      ? heartsRecord.filter((wallet) => wallet !== acc_address)
+      : [...heartsRecord, acc_address];
+
+    const updatedHearts = alreadyHearted
+      ? Math.max(0, data.hearts - 1)
+      : data.hearts + 1;
+
+    const { error: updateError } = await supabaseServer
+      .from("feeds")
+      .update({
+        hearts: updatedHearts,
+        hearts_record: updatedHeartsRecord,
+      })
+      .eq("id", id);
+
+    if (updateError) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Something Went Wrong",
+        },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        hearted: !alreadyHearted,
+        hearts: updatedHearts,
+        hearts_record: updatedHeartsRecord,
+      },
+      { status: 200 }
+    );
+  } catch (err) {
     console.error(err);
-    return NextResponse.json({ success: false, error: err }, { status: 500 });
-  }
 
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Internal Server Error",
+      },
+      { status: 500 }
+    );
+  }
 }

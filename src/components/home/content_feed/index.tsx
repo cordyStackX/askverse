@@ -24,6 +24,7 @@ type FeedItem = {
     id: string;
     context: string;
   }>;
+  hearts_record: string[];
 };
 
 type Content_feedProps = {
@@ -55,7 +56,7 @@ export default function Content_feed({ acc_address, displayName, context, filter
   const [giftAmount, setGiftAmount] = useState<(typeof GIFT_AMOUNTS)[number]>(100);
   const [giftNote, setGiftNote] = useState("");
   const [loading, setLoading] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  // const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     async function Retrieve() {
@@ -65,11 +66,15 @@ export default function Content_feed({ acc_address, displayName, context, filter
         const myPosts = feedItems.filter(
           (item) => item.acc_address === acc_address
         );
+
+        
         setFeedItems(filter ? myPosts : response.data.message);
       }
     }
+
+
     Retrieve();
-  }, [refresh, filter]);
+  }, [filter]);
   
   const activeQuestion = useMemo(
     () => feedItems.find((item) => item.id === activeQuestionId) ?? null,
@@ -212,16 +217,24 @@ export default function Content_feed({ acc_address, displayName, context, filter
                   Show Answers
                 </button>
                 <button onClick={async() => {
-                  const response = await Fetch_to(json_route.feeds.hearts, { id: item.id, acc_address: acc_address });
-                  
-                  if (response.success) {
-                    setRefresh(true);
-                    setTimeout(() => setRefresh(false), 500);
-                  } else {
-                    setRefresh(true);
-                    setTimeout(() => setRefresh(false), 500);
-                  }
-                  
+                  setFeedItems((prev) =>
+                    prev.map((post) => {
+                      if (post.id !== item.id) return post; // <-- Only update this post
+
+                      const alreadyHearted = post.hearts_record.includes(acc_address);
+
+                      return {
+                        ...post,
+                        hearts: alreadyHearted ? post.hearts - 1 : post.hearts + 1,
+                        hearts_record: alreadyHearted
+                          ? post.hearts_record.filter(
+                              (wallet) => wallet !== acc_address
+                            )
+                          : [...post.hearts_record, acc_address],
+                      };
+                    })
+                  );
+                  await Fetch_to(json_route.feeds.hearts, { id: item.id, acc_address: acc_address });
                 }} type="button" className={styles.heart_button}>
                   <HeartIcon active />
                   <span >{item.hearts}</span>
