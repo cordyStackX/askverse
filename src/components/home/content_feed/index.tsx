@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import styles from "./css/styles.module.css";
 import { Fetch_to, formatTimeAgo } from "@/utilities";
 import json_route from "@/config/json_route/route.json";
@@ -49,22 +49,42 @@ function HeartIcon({ active }: { active?: boolean }) {
 }
 
 const GIFT_AMOUNTS = [100, 250, 500, 1000] as const;
+const PAGE_SIZE = 3;
 
 export default function Content_feed({ acc_address, displayName, context, filter, filterSearch } : Content_feedProps) {
   const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [feedLoading, setFeedLoading] = useState(false);
   const [activeQuestionId, setActiveQuestionId] = useState<number | null>(null);
   const [replyDraft, setReplyDraft] = useState("");
   const [giftTarget, setGiftTarget] = useState<{ questionId: string; acc_address: string, author: string, context: string } | null>(null);
   const [giftAmount, setGiftAmount] = useState<(typeof GIFT_AMOUNTS)[number]>(100);
   const [giftNote, setGiftNote] = useState("");
   const [loading, setLoading] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { refreshBalances } = useWalletStatus(); 
 
   useEffect(() => {
+    setFeedItems([]);
+    setPage(1);
+    setHasMore(true);
+  }, [filter, filterSearch, acc_address]);
+
+  useEffect(() => {
+    let cancelled = false;
+
     async function Retrieve() {
+      if (feedLoading || !hasMore) return;
+      setFeedLoading(true);
+
       const response = await Fetch_to(json_route.feeds.retrieve_post, {
         search: filterSearch,
+        acc_address,
+        filter,
+        page,
+        limit: PAGE_SIZE,
       });
 
       if (response.success) {
@@ -84,16 +104,39 @@ export default function Content_feed({ acc_address, displayName, context, filter
           };
         });
 
-        const myPosts = merged.filter(
-          (item) => item.acc_address === acc_address
-        );
+        if (!cancelled) {
+          setFeedItems((current) => (page === 1 ? merged : [...current, ...merged]));
+          setHasMore(merged.length === PAGE_SIZE);
+        }
+      }
 
-        setFeedItems(filter ? myPosts : merged);
-        setRefresh(false);
+      if (!cancelled) {
+        setFeedLoading(false);
       }
     }
     Retrieve();
-  }, [refresh, filter, filterSearch, acc_address]);
+    return () => {
+      cancelled = true;
+    };
+  }, [filter, filterSearch, acc_address, page, refreshKey]);
+
+  useEffect(() => {
+    const observerTarget = loadMoreRef.current;
+    if (!observerTarget) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry?.isIntersecting && hasMore && !feedLoading) {
+          setPage((current) => current + 1);
+        }
+      },
+      { root: null, rootMargin: "200px", threshold: 0.1 },
+    );
+
+    observer.observe(observerTarget);
+    return () => observer.disconnect();
+  }, [hasMore, feedLoading]);
   
   const activeQuestion = useMemo(
     () => feedItems.find((item) => item.id === activeQuestionId) ?? null,
@@ -157,7 +200,6 @@ export default function Content_feed({ acc_address, displayName, context, filter
 
   const handleSubmitGift = async() => {
     if (!giftTarget) return alert("Gift Target Not Exist");
-    setRefresh(true);
 
     if (context !== "Non-EVM") return alert("Invalid Wallet Please use Non-EVMs Wallets");
 
@@ -178,7 +220,10 @@ export default function Content_feed({ acc_address, displayName, context, filter
 
       if (response.success) {
         alert("Send Gift Successfully to " + giftTarget.author);
-        setRefresh(true);
+        setRefreshKey((current) => current + 1);
+        setPage(1);
+        setHasMore(true);
+        setFeedItems([]);
         refreshBalances();
         setLoading(false);
       }
@@ -254,6 +299,9 @@ export default function Content_feed({ acc_address, displayName, context, filter
               </div>
             </article>
         ))}
+        <div ref={loadMoreRef} className={styles.feed_loader}>
+          {feedLoading && <span>Loading more...</span>}
+        </div>
       </div>
 
       {activeQuestion && (
