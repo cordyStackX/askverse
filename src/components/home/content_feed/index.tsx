@@ -224,7 +224,7 @@ export default function Content_feed({ acc_address, displayName, context, filter
 
       if (response.success) {
         alert("Send Gift Successfully to " + giftTarget.author);
-        setRefresh(true);
+        setRefresh(false);
         refreshBalances();
         setLoading(false);
       }
