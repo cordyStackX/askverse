@@ -53,6 +53,7 @@ const PAGE_SIZE = 3;
 
 export default function Content_feed({ acc_address, displayName, context, filter, filterSearch } : Content_feedProps) {
   const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
+  const [debouncedSearch, setDebouncedSearch] = useState(filterSearch);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [feedLoading, setFeedLoading] = useState(false);
@@ -67,10 +68,15 @@ export default function Content_feed({ acc_address, displayName, context, filter
   const { refreshBalances } = useWalletStatus(); 
 
   useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(filterSearch), 300);
+    return () => clearTimeout(t);
+  }, [filterSearch]);
+
+  useEffect(() => {
     setFeedItems([]);
     setPage(1);
     setHasMore(true);
-  }, [filter, filterSearch, acc_address]);
+  }, [filter, debouncedSearch, acc_address]);
 
   useEffect(() => {
     let cancelled = false;
@@ -80,7 +86,7 @@ export default function Content_feed({ acc_address, displayName, context, filter
       setFeedLoading(true);
 
       const response = await Fetch_to(json_route.feeds.retrieve_post, {
-        search: filterSearch,
+        search: debouncedSearch,
         acc_address,
         filter,
         page,
@@ -92,11 +98,16 @@ export default function Content_feed({ acc_address, displayName, context, filter
         const posts: FeedItem[] = result[0];
         const answers: FeedItem["answersList"] = result[1];
 
-        const merged = posts.map((post: FeedItem) => {
-          const answersList = answers.filter(
-            (answer) => answer.questions_id === post.id
-          );
+        // Build a lookup map for answers by question id to avoid O(n*m) filtering
+        const answersById: Record<number, FeedItem["answersList"]> = {};
+        for (const ans of answers) {
+          const qid = Number(ans.questions_id) || 0;
+          if (!answersById[qid]) answersById[qid] = [];
+          answersById[qid].push(ans);
+        }
 
+        const merged = posts.map((post: FeedItem) => {
+          const answersList = answersById[post.id] || [];
           return {
             ...post,
             answers: answersList.length,
@@ -118,7 +129,7 @@ export default function Content_feed({ acc_address, displayName, context, filter
     return () => {
       cancelled = true;
     };
-  }, [filter, filterSearch, acc_address, page, refreshKey]);
+  }, [filter, debouncedSearch, acc_address, page, refreshKey]);
 
   useEffect(() => {
     const observerTarget = loadMoreRef.current;
@@ -252,11 +263,10 @@ export default function Content_feed({ acc_address, displayName, context, filter
       </div>
 
       <div className={styles.feed}>
-        {[...feedItems]
-          .sort(
-            (a, b) =>
-              new Date(b.time).getTime() - new Date(a.time).getTime()
-          ).map((item) => (
+        {useMemo(() => {
+          return [...feedItems]
+            .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+            .map((item) => (
             <article className={styles.post} key={item.id}>
               <div className={styles.post_head}>
                 <div>
@@ -298,7 +308,8 @@ export default function Content_feed({ acc_address, displayName, context, filter
                 </button>
               </div>
             </article>
-        ))}
+            ));
+          }, [feedItems])}
         <div ref={loadMoreRef} className={styles.feed_loader}>
           {feedLoading && <span>Loading more...</span>}
         </div>
