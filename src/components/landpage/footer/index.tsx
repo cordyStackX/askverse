@@ -7,10 +7,10 @@ export default function Footer() {
         <div>
           <p className={styles.brand}>AskVerse</p>
           <p className={styles.copy}>
-            A decentralized knowledge-to-earn platform powered by Stellar.
+            A wallet-connected Q&A platform for asking, answering, and rewarding useful help.
           </p>
         </div>
-        <p className={styles.meta}>Built for trust, learning, and community rewards.</p>
+        <p className={styles.meta}>Built for learning, useful answers, and community gifts.</p>
       </div>
     </footer>
   );

@@ -6,37 +6,37 @@ export default function Article() {
     <article className={styles.container} id="about" >
       <div className={styles.wrapper}>
         <div className={styles.header}>
-          <div className={styles.section_label}>#240 Verified Volunteer Records</div>
-          <h2>Reputation becomes proof of contribution.</h2>
+          <div className={styles.section_label}>About AskVerse</div>
+          <h2>Good answers should be easy to find and easy to support.</h2>
           <p>
-            AskVerse rewards verified volunteer work, making useful participation visible,
-            searchable, and valuable across the ecosystem.
+            AskVerse brings questions, answers, hearts, wallet gifts, and leaderboards
+            into one focused community feed.
           </p>
         </div>
 
         <div className={styles.grid}>
           <section className={styles.feature}>
-            <h3>Verified records</h3>
+            <h3>Question feed</h3>
             <p>
-              Each high-quality contribution can be recorded as a trusted action that lifts a user&apos;s standing.
+              Browse community questions, search the feed, and keep your own questions separate when you need to focus.
             </p>
           </section>
           <section className={styles.feature}>
-            <h3>Community trust</h3>
+            <h3>Helpful answers</h3>
             <p>
-              Upvotes and moderation help surface the answers that genuinely solve problems.
+              Answers live under each question so the most useful responses stay connected to the problem.
             </p>
           </section>
           <section className={styles.feature}>
-            <h3>Earned rewards</h3>
+            <h3>XLM gifts</h3>
             <p>
-              Stellar-based incentives give contributors a concrete reason to keep sharing knowledge.
+              Supported wallets can send XLM gifts to answer creators as a direct thank-you.
             </p>
           </section>
           <section className={styles.feature}>
-            <h3>Portable reputation</h3>
+            <h3>Leader boards</h3>
             <p>
-              Contributions can become a record people carry with them beyond a single discussion thread.
+              Users are ranked by the total up-vote score they receive from gifted answers.
             </p>
           </section>
         </div>

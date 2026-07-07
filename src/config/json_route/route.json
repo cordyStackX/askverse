@@ -11,6 +11,7 @@
     "retrieve_post" : "/services/supabase/retrieve_post",
     "answer" : "/services/supabase/answer",
     "hearts" : "/services/supabase/hearts",
-    "upvote" : "/services/supabase/upvote"
+    "upvote" : "/services/supabase/upvote",
+    "delete_post" : "/services/supabase/delete_post"
   }
 }

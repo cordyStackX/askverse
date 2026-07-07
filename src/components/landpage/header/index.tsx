@@ -31,6 +31,7 @@ export default function Header() {
           </ul>
         </nav>
         <div className={styles.buttons_contain}>
+          <button type="button" onClick={() => {router.push("/leader_boards");}}>Leader Boards</button>
           <button onClick={() => {router.push(navigations.auth.sign_in);}}>Get Started</button>
         </div>
       </div>

@@ -14,19 +14,19 @@ export default function FaQ() {
           <details open>
             <summary>What makes AskVerse different?</summary>
             <p>
-              It combines Q&A, reputation, and rewards, so the best answers create lasting value.
+              It combines a Q&A feed with wallet-connected rewards, so helpful answers can receive direct support.
             </p>
           </details>
           <details>
             <summary>How do rewards work?</summary>
             <p>
-              High-value answers can earn blockchain-based rewards tied to community feedback and trust.
+              When someone finds an answer useful, supported wallets can send an XLM gift to that answer creator.
             </p>
           </details>
           <details>
-            <summary>What does verified volunteer mean?</summary>
+            <summary>How does the leaderboard work?</summary>
             <p>
-              It means contribution records can be validated and turned into reputation signals.
+              The leaderboard ranks users by the total up-vote score they receive from gifted answers.
             </p>
           </details>
         </div>

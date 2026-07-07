@@ -34,6 +34,7 @@ type Content_feedProps = {
   context: string;
   filter: boolean;
   filterSearch: string;
+  globalRefresh: boolean;
 }
 
 function HeartIcon({ active }: { active?: boolean }) {
@@ -48,9 +49,32 @@ function HeartIcon({ active }: { active?: boolean }) {
   );
 }
 
+function FeedSkeleton() {
+  return (
+    <article className={styles.post}>
+      <div className={styles.skeleton_head}>
+        <div className={styles.skeleton_avatar} />
+        <div className={styles.skeleton_stack}>
+          <div className={styles.skeleton_line} />
+          <div className={styles.skeleton_line_short} />
+        </div>
+      </div>
+      <div className={styles.skeleton_body}>
+        <div className={styles.skeleton_line} />
+        <div className={styles.skeleton_line} />
+        <div className={styles.skeleton_line_medium} />
+      </div>
+      <div className={styles.skeleton_actions}>
+        <div className={styles.skeleton_pill} />
+        <div className={styles.skeleton_pill_small} />
+      </div>
+    </article>
+  );
+}
+
 const GIFT_AMOUNTS = [100, 250, 500, 1000] as const;
 
-export default function Content_feed({ acc_address, displayName, context, filter, filterSearch } : Content_feedProps) {
+export default function Content_feed({ acc_address, displayName, context, filter, filterSearch, globalRefresh } : Content_feedProps) {
   const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -121,7 +145,7 @@ export default function Content_feed({ acc_address, displayName, context, filter
     return () => {
       cancelled = true;
     };
-  }, [refresh, filter, filterSearch, acc_address, page]);
+  }, [refresh, filter, filterSearch, acc_address, page, globalRefresh]);
 
   useEffect(() => {
     const observerTarget = loadMoreRef.current;
@@ -253,12 +277,18 @@ export default function Content_feed({ acc_address, displayName, context, filter
       </div>
 
       <div className={styles.feed}>
-        {[...feedItems]
+        {feedLoading && feedItems.length === 0 ? (
+          Array.from({ length: 5 }).map((_, index) => (
+            <FeedSkeleton key={index} />
+          ))
+        ) : (
+          [...feedItems]
           .sort(
             (a, b) =>
               new Date(b.time).getTime() - new Date(a.time).getTime()
           ).map((item) => (
             <article className={styles.post} key={item.id}>
+              
               <div className={styles.post_head}>
                 <div>
                   <strong>{item.acc_address === acc_address ? "Your Question" : item.author}</strong>
@@ -298,10 +328,21 @@ export default function Content_feed({ acc_address, displayName, context, filter
                   <span >{item.hearts}</span>
                 </button>
               </div>
+              {item.acc_address === acc_address ? (
+                <button type="button" onClick={async() => {
+                  const confirmed = window.confirm("Are you sure you want to delete this post?");
+                  if (!confirmed) return;
+
+                  await Fetch_to(json_route.feeds.delete_post, { id: item.id });
+                  setRefresh(true);
+                  setTimeout(() => setRefresh(false), 100);
+                }} className={styles.delete_button}>Delete This Post</button>
+              ) : null}
             </article>
-        ))}
+          ))
+        )}
         <div ref={loadMoreRef} className={styles.feed_loader}>
-          {feedLoading && <span>Loading more...</span>}
+          {feedLoading && feedItems.length > 0 && <FeedSkeleton />}
         </div>
       </div>
 

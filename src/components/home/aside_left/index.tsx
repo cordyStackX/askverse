@@ -20,11 +20,17 @@ type Aside_leftProps = {
   setFilter: Dispatch<SetStateAction<boolean>>;
 }
 
+function getProfileInitial(displayName?: string, username?: string) {
+  const name = displayName?.trim() || username?.trim() || "A";
+  return name.slice(0, 1).toUpperCase();
+}
+
 export default function Aside_left({ upvote, displayName, username, context, evm, stellar, setDisplayName, setUsername, setFilter, balance } : Aside_leftProps) {
   const router = useRouter();
   const [profileOpen, setProfileOpen] = useState(false);
   const { disconnectAll } = useDisconnectWallets();
   const [loading, setLoading] = useState(false);
+  const profileInitial = getProfileInitial(displayName, username);
 
   async function handleDisconnect() {
     setLoading(true);                                                                            
@@ -48,12 +54,10 @@ export default function Aside_left({ upvote, displayName, username, context, evm
             className={styles.profile_button}
             onClick={() => setProfileOpen(true)}
           >
-            <div className={styles.avatar}>AV</div>
+            <div className={styles.avatar}>{profileInitial}</div>
             <div>
               <strong>{displayName}</strong>
               <p style={{ margin: "0.2rem" }}>@{username}</p>
-              <p>Balance: {Number(balance).toFixed(2) || 0}</p>
-              <p>UpVote Score: {upvote || 0}</p>
             </div>
           </button>
           <button type="button" className={styles.burger} aria-label="Open navigation">
@@ -61,6 +65,16 @@ export default function Aside_left({ upvote, displayName, username, context, evm
             <span />
             <span />
           </button>
+        </div>
+        <div className={styles.stats}>
+          <article>
+            <span>Balance</span>
+            <strong>{Number(balance || 0).toFixed(2)}</strong>
+          </article>
+          <article>
+            <span>UpVote Score</span>
+            <strong>{upvote || 0}</strong>
+          </article>
         </div>
         <nav className={styles.nav}>
           <ul>

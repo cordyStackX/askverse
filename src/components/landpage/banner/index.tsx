@@ -8,11 +8,12 @@ export default function Banner() {
       <div className={styles.glow_right} />
       <div className={styles.wrapper}>
         <div className={styles.copy}>
-          <p className={styles.kicker}>Decentralized knowledge-to-earn</p>
-          <h1>Ask, answer, and earn trust on Stellar.</h1>
+          <p className={styles.kicker}>Community Q&A with wallet rewards</p>
+          <h1>Ask questions, answer clearly, and reward helpful people.</h1>
           <p className={styles.lead}>
-            AskVerse turns helpful answers into reputation and rewards, giving
-            verified contributors a place to grow community trust through on-chain proof.
+            AskVerse is a wallet-connected Q&A space where people post questions,
+            share answers, heart useful discussions, and send XLM gifts to answers
+            that helped them.
           </p>
           <div className={styles.actions}>
             <a href="/auth/sign-in" className={styles.primary}>
@@ -24,37 +25,37 @@ export default function Banner() {
           </div>
           <ul className={styles.pills}>
             <li>Ask questions</li>
-            <li>Upvote the best answers</li>
-            <li>Earn token rewards</li>
+            <li>Answer with value</li>
+            <li>Gift top answers</li>
           </ul>
         </div>
 
         <div className={styles.panel}>
           <div className={styles.panel_head}>
-            <span>Live reputation board</span>
-            <span>Stellar-backed</span>
+            <span>AskVerse feed</span>
+            <span>Wallet-connected</span>
           </div>
           <div className={styles.panel_card}>
-            <p>Community score</p>
-            <strong>240 verified volunteer records</strong>
-            <span>Reputation grows when contributions are validated by the community.</span>
+            <p>How ranking works</p>
+            <strong>Helpful answers earn up-vote score</strong>
+            <span>Leaderboard position grows when answer creators receive XLM gifts from the community.</span>
           </div>
           <div className={styles.panel_grid}>
             <article>
-              <span>Answers rewarded</span>
-              <strong>12.4K</strong>
+              <span>Post</span>
+              <strong>Questions</strong>
             </article>
             <article>
-              <span>Questions solved</span>
-              <strong>8.9K</strong>
+              <span>Share</span>
+              <strong>Answers</strong>
             </article>
             <article>
-              <span>Trust signals</span>
-              <strong>96%</strong>
+              <span>Support</span>
+              <strong>Hearts</strong>
             </article>
             <article>
-              <span>Active earners</span>
-              <strong>1.8K</strong>
+              <span>Reward</span>
+              <strong>XLM Gifts</strong>
             </article>
           </div>
         </div>

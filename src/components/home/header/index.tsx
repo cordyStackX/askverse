@@ -2,6 +2,7 @@
 
 import { Dispatch, SetStateAction } from "react";
 import styles from "./css/styles.module.css";
+import { useRouter } from "next/navigation";
 
 type HeaderProps = {
   onPostQuestionClick: () => void;
@@ -10,6 +11,7 @@ type HeaderProps = {
 };
 
 export default function Header({ onPostQuestionClick, filterSearch, setFilterSearch }: HeaderProps) {
+  const router = useRouter();
 
   return(
     <header className={styles.container}>
@@ -30,9 +32,14 @@ export default function Header({ onPostQuestionClick, filterSearch, setFilterSea
             aria-label="Search AskVerse"
           />
         </div>
-        <button type="button" className={styles.action} onClick={onPostQuestionClick}>
-          Ask Question
-        </button>
+        <div className={styles.actions}>
+          <button type="button" className={styles.secondary_action} onClick={() => router.push("/leader_boards")}>
+            Leader Boards
+          </button>
+          <button type="button" className={styles.action} onClick={onPostQuestionClick}>
+            Ask Question
+          </button>
+        </div>
       </div>
     </header>
   );

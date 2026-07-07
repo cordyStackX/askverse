@@ -25,6 +25,7 @@ export default function Home_page() {
   const [globalLoading, setGlobalLaoding] = useState(false);
   const [filter, setFilter] = useState(false);
   const [filterSearch, setFilterSearch] = useState("");
+  const [globalRefresh, setGlobalRefresh] = useState(false);
   const { context, evm, stellar } = useWalletStatus();
   const { disconnectAll } = useDisconnectWallets();
 
@@ -60,7 +61,7 @@ export default function Home_page() {
       <Header setFilterSearch={setFilterSearch} filterSearch={filterSearch} onPostQuestionClick={() => setQuestionComposerOpen((current) => !current)} />
       <div className="homepage_shell">
         <Aside_left upvote={upvote} displayName={displayName} username={username} context={context} evm={`${evm.address}`} stellar={`${stellar.address}`} setDisplayName={setDisplayName} setUsername={setUsername} setFilter={setFilter} balance={context === "EVM" ? evm.balance : stellar.balance} />
-        <Content_feed filterSearch={filterSearch} displayName={displayName} context={context} acc_address={`${context === "EVM" ? evm.address : stellar.address}`} filter={filter} />
+        <Content_feed globalRefresh={globalRefresh} filterSearch={filterSearch} displayName={displayName} context={context} acc_address={`${context === "EVM" ? evm.address : stellar.address}`} filter={filter} />
         <Aside_right setFilterSearch={setFilterSearch} />
         <Profile />
       </div>
@@ -111,7 +112,9 @@ export default function Home_page() {
                   setBodyDraft("");
                   setQuestionDraft("");
                   setGlobalLaoding(false);
-                  window.location.reload();
+                  setGlobalRefresh(true);
+                  setTimeout(() => setGlobalRefresh(false), 100);
+                  setQuestionComposerOpen(false);
                 } else {
                   alert(response.message);
                   setGlobalLaoding(false);
