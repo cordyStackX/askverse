@@ -42,8 +42,9 @@ Rewards aren't auto-minted — they're peer-funded. The leaderboard reflects rea
 
 ```mermaid
 flowchart LR
-    A["Next.js Frontend<br/>(React 19, TypeScript)"] -->|wallet calls| B["Cordy Minikit<br/>(wallet layer)"]
-    B -->|payment tx| C["Stellar Horizon<br/>(Testnet)"]
+    A["Next.js Frontend<br/>(React 19, TypeScript)"] -->|wallet calls| B["Cordy Minikit<br/>(chain-abstracted wallet layer)"]
+    B -->|Non-EVM payment tx| C["Stellar Horizon<br/>(Testnet|Mainnet)"]
+    B -->|EVM payment tx| E["Base Sepolia<br/>(EVM)"]
     A -->|CRUD| D["Supabase<br/>questions · answers · hearts<br/>gifts · profiles · leaderboard"]
 ```
 
