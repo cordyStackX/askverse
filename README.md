@@ -192,6 +192,7 @@ Designed and developed the platform; built the frontend and backend routes; inte
 - **XTwitter:** https://x.com/cordystackx
 - **LinkedIn:** www.linkedin.com/in/marc-giestin-louis-cordova-657849276
 - **Telegram:** https://t.me/cordystackx
+- **Wallet Address:** GDBDNKLOEKY7SGXOM64G26VA65R4WXZDTDDO6MXD5QU4NGYRIWRERLOT
 
 ## License
 
