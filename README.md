@@ -182,11 +182,6 @@ npm run start     # run production build
 **Marc Giestin Louis Cordova** ([CordyStackX](https://github.com/CordyStackX)) — Founder & Lead Developer
 Designed and developed the platform; built the frontend and backend routes; integrated wallet connection; implemented question, answer, gift, profile, and leaderboard flows.
 
-**Gilbert Lerion** — Developer
-
-**Julian Martir** & **Angel Lucenio** — Documentation & Presentation
-Prepared project documentation, created the pitch deck, presented the project during the hackathon.
-
 ## Links
 
 - **Repository:** https://github.com/LCCB-SIPD/askverse.git
