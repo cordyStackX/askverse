@@ -43,7 +43,7 @@ Rewards aren't auto-minted — they're peer-funded. The leaderboard reflects rea
 ```mermaid
 flowchart LR
     A["Next.js Frontend<br/>(React 19, TypeScript)"] -->|wallet calls| B["Cordy Minikit<br/>(chain-abstracted wallet layer)"]
-    B -->|Non-EVM payment tx| C["Stellar Horizon<br/>(Testnet|Mainnet)"]
+    B -->|Non-EVM payment tx| C["Stellar Horizon<br/>(Testnet)"]
     B -->|EVM payment tx| E["Base Sepolia<br/>(EVM)"]
     A -->|CRUD| D["Supabase<br/>questions · answers · hearts<br/>gifts · profiles · leaderboard"]
 ```
@@ -51,6 +51,16 @@ flowchart LR
 Cordy Minikit handles wallet connection and Stellar payment calls to Horizon; Supabase stores app state (posts, gift records, leaderboard scores) and keeps score reconciliation off-chain for speed, while the actual value transfer happens on-chain via XLM.
 
 ## Contract Addresses
+
+### Stellar / Soroban Mainnet ✅ Live
+
+```env
+NEXT_PUBLIC_STELLAR_HORIZON=https://horizon.stellar.org
+NEXT_PUBLIC_STELLAR_CONTRACT_ID=CDVKB2ZBU6LRQKVTTNKHSVF23UGTKVP4PKCXHOQ3MWO3XQIXB5DTYJ5K
+NEXT_PUBLIC_STELLAR_NETWORK_PASSPHRASE=Public Global Stellar Network ; September 2015
+```
+
+[View on Stellar Expert](https://stellar.expert/explorer/public/contract/CDVKB2ZBU6LRQKVTTNKHSVF23UGTKVP4PKCXHOQ3MWO3XQIXB5DTYJ5K)
 
 ### Stellar / Soroban Testnet
 
@@ -161,7 +171,7 @@ npm run start     # run production build
 
 ## Roadmap
 
-- [ ] Mainnet deployment on Stellar
+- [x] Mainnet deployment on Stellar
 - [ ] Soroban smart contract integration for on-chain gift/score verification (`askverse_gifts` contract in progress)
 - [ ] Notifications for gifted answers
 - [ ] Mobile-responsive polish
