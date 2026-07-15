@@ -100,6 +100,7 @@ export default function Content_feed({ shared_link, acc_address, displayName, co
   const [mentionAnswerId, setMentionAnswerId] = useState<string | null>(null);
   const replyTextareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [copiedShareId, setCopiedShareId] = useState<number | null>(null);
+  const [repliesLoading, setRepliesLoading] = useState(false);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { refreshBalances } = useWalletStatus(); 
 
@@ -162,6 +163,7 @@ export default function Content_feed({ shared_link, acc_address, displayName, co
     if (!activeQuestion || !activeQuestion.answersList?.length) return;
 
     async function fetchReplies() {
+      setRepliesLoading(true);
       const answerIds = activeQuestion?.answersList.map((a) => a.id);
 
       const response = await Fetch_to(json_route.feeds.retrieve_reply, { answer_ids: answerIds });
@@ -196,6 +198,8 @@ export default function Content_feed({ shared_link, acc_address, displayName, co
           ),
         );
       }
+
+      setRepliesLoading(false);
     }
 
     fetchReplies();
@@ -346,6 +350,19 @@ export default function Content_feed({ shared_link, acc_address, displayName, co
     }));
   };
 
+  function ReplySkeleton() {
+    return (
+      <div className={styles.reply_item}>
+        <div className={styles.skeleton_head}>
+          <div className={styles.skeleton_stack}>
+            <div className={styles.skeleton_line_short} />
+            <div className={styles.skeleton_line_medium} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   function renderWithMentions(text: string) {
     const parts = text.split(/(@[a-zA-Z0-9_]+)/g);
 
@@ -453,6 +470,7 @@ export default function Content_feed({ shared_link, acc_address, displayName, co
 
     requestAnimationFrame(() => textarea.focus());
   };
+
 
   return(
     <section className={styles.container}>
@@ -654,31 +672,37 @@ export default function Content_feed({ shared_link, acc_address, displayName, co
                           </div>
                         )}
 
-                        {answer.replies && answer.replies.length > 0 && (
+                        {repliesLoading ? (
                           <div className={styles.reply_list}>
-                            {(expandedReplies[answer.id] ? answer.replies : answer.replies.slice(0, 1)).map((reply) => (
-                              <div key={reply.id} className={styles.reply_item}>
-                                <div className={styles.reply_item_head}>
-                                  <strong>{reply.acc_address === acc_address ? "You" : reply.author}</strong>
-                                  <span>{formatTimeAgo(reply.time)}</span>
-                                </div>
-                                <p>{renderWithMentions(reply.body)}</p>
-                              </div>
-                            ))}
-
-                            {answer.replies.length > 1 && (
-                              <button
-                                type="button"
-                                className={styles.show_more_replies}
-                                onClick={() => toggleRepliesExpanded(answer.id)}
-                              >
-                                {expandedReplies[answer.id]
-                                  ? "Show less"
-                                  : `Show ${answer.replies.length - 1} more repl${answer.replies.length - 1 === 1 ? "y" : "ies"}`}
-                              </button>
-                            )}
+                            <ReplySkeleton />
                           </div>
-                        )}   
+                        ) : (
+                          answer.replies && answer.replies.length > 0 && (
+                            <div className={styles.reply_list}>
+                              {(expandedReplies[answer.id] ? answer.replies : answer.replies.slice(0, 1)).map((reply) => (
+                                <div key={reply.id} className={styles.reply_item}>
+                                  <div className={styles.reply_item_head}>
+                                    <strong>{reply.acc_address === acc_address ? "You" : reply.author}</strong>
+                                    <span>{formatTimeAgo(reply.time)}</span>
+                                  </div>
+                                  <p>{renderWithMentions(reply.body)}</p>
+                                </div>
+                              ))}
+
+                              {answer.replies.length > 1 && (
+                                <button
+                                  type="button"
+                                  className={styles.show_more_replies}
+                                  onClick={() => toggleRepliesExpanded(answer.id)}
+                                >
+                                  {expandedReplies[answer.id]
+                                    ? "Show less"
+                                    : `Show ${answer.replies.length - 1} more repl${answer.replies.length - 1 === 1 ? "y" : "ies"}`}
+                                </button>
+                              )}
+                            </div>
+                          )
+                        )}
                       </article>
                     ))
                   ) : (
